@@ -1,0 +1,86 @@
+<div>
+
+    <div style="display: flex; flex-direction: column; max-width: 400px;"
+            id="datos_generales" ng-if="administracionCtrl.datosGenerales" form-id="datos_generales">
+        <input ng-model="administracionCtrl.propiedad.titulo" type="text"
+               id="propiedad_titulo"
+               ac-validator
+               min-length="10;El título debe tener mas de diez letras"
+               max-length="50;El título no puede tener mas de 50 letras"/>
+        <input ng-model="administracionCtrl.propiedad.descripcion" type="text"
+               id="propiedad_descripcion"
+               ac-validator
+               min-length="10;La descripción debe tener mas de diez letras"
+               max-length="500;La descripción no puede tener mas de 500 letras"/>
+        <select name="" id="" ng-model="administracionCtrl.propiedad.moneda"
+                id="propiedad_moneda"
+                ng-options="opt.nombre for opt in administracionCtrl.arrMoneda"
+        ng-init="administracionCtrl.loadedMonedas;">
+        </select>
+        <input ng-model="administracionCtrl.propiedad.precio" type="text"
+               id="propiedad_precio"
+               ac-validator
+               min-number="0;Debe ingresar un valor mayor a 0"/>
+        <button ac-validator
+                ng-click="administracionCtrl.navPropiedad()"
+                ng-if="administracionCtrl.panel =='administracion/propiedad.html'">Siguiente
+        </button>
+    </div>
+
+    <div id="especificaciones" ng-if="administracionCtrl.especificaciones">
+        <input ng-model="administracionCtrl.propiedad.tipo_propiedad" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.superficie" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.habitaciones" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.banos" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.servicios_basicos" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.generales" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.otros" type="text"/>
+        <button ng-click="administracionCtrl.navPropiedad()"
+                ng-if="administracionCtrl.panel =='administracion/propiedad.html'">Siguiente
+        </button>
+    </div>
+
+    <div id="ubicacion" ng-if="administracionCtrl.ubicacion">
+        <input ng-model="administracionCtrl.direccion.nombre" type="text"/>
+        <input ng-model="administracionCtrl.direccion.numero" type="text"/>
+        <button ng-click="administracionCtrl.navPropiedad()"
+                ng-if="administracionCtrl.panel =='administracion/propiedad.html'">Siguiente
+        </button>
+    </div>
+
+    <div id="fotos" ng-if="administracionCtrl.fotos">
+        <input ng-model="administracionCtrl.propiedad.fotos" type="text"/>
+        <button ng-click="administracionCtrl.navPropiedad()"
+                ng-if="administracionCtrl.panel =='administracion/propiedad.html'">Siguiente
+        </button>
+    </div>
+
+
+    <!--<input ng-model="administracionCtrl.propiedad.inmobiliaria" type="text"/>-->
+    <!--<input ng-model="administracionCtrl.propiedad.status" type="text"/>-->
+
+    <div ng-if="administracionCtrl.isUpdate">
+        <input ng-model="administracionCtrl.propiedad.titulo" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.descripcion" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.precio" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.moneda" type="text"/>
+
+        <input ng-model="administracionCtrl.propiedad.tipo_propiedad" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.superficie" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.habitaciones" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.banos" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.servicios_basicos" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.generales" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.otros" type="text"/>
+
+        <input ng-model="administracionCtrl.propiedad.direccion" type="text"/>
+
+        <input ng-model="administracionCtrl.propiedad.fotos" type="text"/>
+    </div>
+
+    <div id="button-bar">
+        <button ng-click="administracionCtrl.savePropiedad();"
+                ng-if="administracionCtrl.fotos">Guardar
+        </button>
+    </div>
+</div>
