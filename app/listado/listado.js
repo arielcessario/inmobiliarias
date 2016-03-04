@@ -20,21 +20,12 @@
 
             for(var i = 0; i<data.length;i++){
                 vm.filteredPropiedades[i].direcciones = vm.direcciones.$load(data[i].direccion);
-
             }
             for(var i = 0; i<data.length;i++){
                 vm.filteredPropiedades[i].monedas = vm.monedas.$load(data[i].moneda);
-
             }
-
-
         });
 
-
-
-        vm.filteredPropiedades[0].monedas.$loaded(function(data){
-            console.log(data);
-        });
 
         vm.moneda = {};
         vm.arrMonedas = FireService.createArrayRef(FireModel.refMonedas, 'status', 'true', 'true');
