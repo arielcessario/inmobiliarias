@@ -1,7 +1,9 @@
 <div ng-controller="ListadoCtrl as listadoCtrl">
 
-    <div>{{listadoCtrl.prueba.banos}}</div>
-    
+    <select name="" id="" ng-options="opt.nombre for opt in listadoCtrl.arrMonedas" ng-model="listadoCtrl.moneda"></select>
+
+    <!--<input type="text" ng-change="listadoCtrl.filtrar()" ng-model="listadoCtrl.text">-->
+    <!--<input type="text" ng-model="filtro">-->
     <table>
         <thead>
         <tr>
@@ -10,10 +12,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="casa in listadoCtrl.casas" ng-init="dir = listadoCtrl.direcciones.$load(casa.direcciones);">
-            <td><input type="text" ng-model="casa.titulo"></td>
-            <td><input type="text" ng-model="casa.descripcion"></td>
-            <td><input type="text" ng-model="dir[0].cp"></td>
+        <tr ng-repeat="propiedad in listadoCtrl.filteredPropiedades | filter:filtro">
+            <td><input type="text" ng-model="propiedad.titulo"></td>
+            <td><input type="text" ng-model="propiedad.descripcion"></td>
+            <td><input type="text" ng-model="propiedad.direcciones[0].nombre"></td>
         </tr>
         </tbody>
     </table>

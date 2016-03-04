@@ -15,6 +15,8 @@
         service.init = init;
         service.cacheFactory = cacheFactory;
         service.bindTo = bindTo;
+        service.getIndex = getIndex;
+        service.formatObj = formatObj;
 
         return service;
 
@@ -60,6 +62,28 @@
             return _cache;
         }
 
+        function getIndex(key, array){
+            for(var i = 0; i<array.length; i++){
+                if(array[i].$id == key){
+                    return i;
+                }
+            }
+        }
+
+        function formatObj(obj){
+            var props = Object.getOwnPropertyNames(obj);
+
+            for(var i = 0; i<props.length; i++){
+                if(obj[props[i]].hasOwnProperty('$id')){
+                    var key = obj[props[i]].$id;
+                    obj[props[i]] = {};
+                    obj[props[i]][key] = true;
+                }
+            }
+
+            return obj;
+        }
+
 
         /**
          *
@@ -75,8 +99,14 @@
             return $firebaseObject(ref);
         }
 
-        function createArrayRef(ref) {
-            return $firebaseArray(ref);
+        function createArrayRef(ref, orderBy, startAt, endAt) {
+            if(orderBy == undefined){
+
+                return $firebaseArray(ref);
+            }else{
+                var filtered = ref.orderByChild(orderBy).startAt(startAt).endAt(endAt);
+                return $firebaseArray(filtered);
+            }
         }
     }
 
@@ -103,7 +133,8 @@
             descripcion: '',
             direccion: {},
             fotos: {},
-            superficie: '',
+            superficie_total: '',
+            superficie_cubierta: '',
             precio: 0.0,
             moneda: {},
             habitaciones: 0,
@@ -207,6 +238,13 @@
         };
 
         factory.refProvincias = FireVars._FIREREF.child('/provincia/');
+
+        factory.tiposCalle = {
+            nombre: '',
+            status: true
+        };
+
+        factory.refTiposCalle = FireVars._FIREREF.child('/tipos_calle/');
 
         factory.usuario = {
             nombre: '',

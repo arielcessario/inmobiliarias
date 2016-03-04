@@ -8,12 +8,53 @@
     function ListadoCtrl(FireService, FireModel, FireVars) {
 
         var vm = this;
-        vm.casas = FireService.createArrayRef(FireModel.refPropiedades);
+        vm.propiedades = [];
+        vm.filteredPropiedades = FireService.createArrayRef(FireModel.refPropiedades);
         vm.direcciones = FireService.cacheFactory(FireModel.refDirecciones);
+        vm.monedas = FireService.cacheFactory(FireModel.refMonedas);
+
+        vm.text = '';
+
+        vm.filteredPropiedades.$loaded(function (data) {
+            vm.propiedades = vm.filteredPropiedades;
+
+            for(var i = 0; i<data.length;i++){
+                vm.filteredPropiedades[i].direcciones = vm.direcciones.$load(data[i].direccion);
+
+            }
+            for(var i = 0; i<data.length;i++){
+                vm.filteredPropiedades[i].monedas = vm.monedas.$load(data[i].moneda);
+
+            }
+
+
+        });
+
+
+
+        vm.filteredPropiedades[0].monedas.$loaded(function(data){
+            console.log(data);
+        });
+
+        vm.moneda = {};
+        vm.arrMonedas = FireService.createArrayRef(FireModel.refMonedas, 'status', 'true', 'true');
+        vm.arrMonedas.$loaded(function (data) {
+            vm.moneda = data[0];
+        });
+
+        vm.filtro = "";
+        vm.filtrar = function () {
+            console.log(vm.text);
+            vm.filteredPropiedades = vm.propiedades.filter(function (e, i, a) {
+                console.log(e.titulo.indexOf(vm.text) > -1);
+                return (e.titulo.indexOf(vm.text) > -1) ? e : null;
+            });
+
+            console.log(vm.filteredPropiedades);
+        };
 
 
         //vm.direcciones = FireService.cacheFactory();
-
 
 
         //vm.casa = Factory.casa;

@@ -1,7 +1,7 @@
 <div ng-controller="AdministracionCtrl as administracionCtrl">
     <div id="administracion-nav">
-        <button ng-click="administracionCtrl.panel='administracion/propiedad.html'; administracionCtrl.datosGenerales = true;">Nueva Propiedad</button>
-        <button ng-click="administracionCtrl.panel='administracion/parametros.html';">Parametrización</button>
+        <button ng-click="administracionCtrl.panel='administracion/propiedad.html'">Nueva Propiedad</button>
+        <button ng-click="administracionCtrl.panel='administracion/parametros.html'">Parametrización</button>
     </div>
     <div id="administracion-panel" ng-include="administracionCtrl.panel">
 

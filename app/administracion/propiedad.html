@@ -1,7 +1,7 @@
 <div>
 
     <div style="display: flex; flex-direction: column; max-width: 400px;"
-            id="datos_generales" ng-if="administracionCtrl.datosGenerales" form-id="datos_generales">
+         id="datos_generales" ng-if="administracionCtrl.datosGenerales" form-id="datos_generales">
         <input ng-model="administracionCtrl.propiedad.titulo" type="text"
                id="propiedad_titulo"
                ac-validator
@@ -14,8 +14,8 @@
                max-length="500;La descripción no puede tener mas de 500 letras"/>
         <select name="" id="" ng-model="administracionCtrl.propiedad.moneda"
                 id="propiedad_moneda"
-                ng-options="opt.nombre for opt in administracionCtrl.arrMoneda"
-        ng-init="administracionCtrl.loadedMonedas;">
+                ng-options="opt.nombre for opt in administracionCtrl.arrMonedaActivo"
+                ng-init="administracionCtrl.loadedMonedas;">
         </select>
         <input ng-model="administracionCtrl.propiedad.precio" type="text"
                id="propiedad_precio"
@@ -27,20 +27,63 @@
         </button>
     </div>
 
-    <div id="especificaciones" ng-if="administracionCtrl.especificaciones">
-        <input ng-model="administracionCtrl.propiedad.tipo_propiedad" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.superficie" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.habitaciones" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.banos" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.servicios_basicos" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.generales" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.otros" type="text"/>
-        <button ng-click="administracionCtrl.navPropiedad()"
+    <div style="display: flex; flex-direction: column; max-width: 400px;"
+         id="especificaciones" ng-if="administracionCtrl.especificaciones" form-id="especificaciones">
+        <select name="" id="" ng-model="administracionCtrl.propiedad.tipoPropiedad"
+                id="propiedad_tipo_propiedad"
+                ng-options="opt.nombre for opt in administracionCtrl.arrTipoPropiedadActivo"
+                ng-init="administracionCtrl.loadedTiposPropiedad;">
+        </select>
+        <input ng-model="administracionCtrl.propiedad.superficie_total" type="number"
+               ac-validator
+               min-number="0;Debe ingresar un valor mayor a 0"/>
+        <input ng-model="administracionCtrl.propiedad.superficie_cubierta" type="number"
+               ac-validator
+               min-number="0;Debe ingresar un valor mayor a 0"/>
+        <input ng-model="administracionCtrl.propiedad.habitaciones" type="number"
+               ac-validator
+               min-number="0;Debe ingresar un valor mayor a 0"/>
+        <input ng-model="administracionCtrl.propiedad.banos" type="number"/>
+        <div id="generales" style="display: flex; flex-direction: column; max-width: 400px;">
+            <label ng-repeat="opt in administracionCtrl.arrGeneralActivo">{{opt.nombre}}
+                <input type="number"
+                       ac-validator
+                       min-number="0;La cantidad debe ser 0 o mayor"
+                       ng-change="administracionCtrl.log()"
+                       ng-model="administracionCtrl.propiedad.general[opt.$id]"
+                       ng-init="administracionCtrl.propiedad.general[opt.$id] = 0"
+                       name="otros"
+                       ng-attr-id="{{opt.$id}}"
+                       ng-value="opt.$id"></label><br>
+        </div>
+        <div id="servicios" style="display: flex; flex-direction: column; max-width: 400px;">
+            <label ng-repeat="opt in administracionCtrl.arrServicioActivo">{{opt.nombre}}
+                <input type="checkbox"
+                       ng-change="administracionCtrl.log()"
+                       ng-model="administracionCtrl.propiedad.servicio[opt.$id]"
+                       name="otros"
+                       ng-value="opt.$id"></label><br>
+        </div>
+        <div id="otros" style="display: flex; flex-direction: column; max-width: 400px;">
+            <label ng-repeat="opt in administracionCtrl.arrOtroActivo">{{opt.nombre}}
+                <input type="checkbox"
+                       ng-change="administracionCtrl.log()"
+                       ng-model="administracionCtrl.propiedad.otro[opt.$id]"
+                       name="otros"
+                       ng-value="opt.$id"></label><br>
+        </div>
+        <button ng-click="administracionCtrl.navPropiedad()" ac-validator
                 ng-if="administracionCtrl.panel =='administracion/propiedad.html'">Siguiente
         </button>
     </div>
 
     <div id="ubicacion" ng-if="administracionCtrl.ubicacion">
+        <select name="" id=""
+                ng-model="administracionCtrl.propiedad.tipoCalle"
+                id="propiedad_tipo_calle"
+                ng-options="opt.nombre for opt in administracionCtrl.arrTipoCalleActivo"
+                ng-init="administracionCtrl.loadedTiposPropiedad;">
+        </select>
         <input ng-model="administracionCtrl.direccion.nombre" type="text"/>
         <input ng-model="administracionCtrl.direccion.numero" type="text"/>
         <button ng-click="administracionCtrl.navPropiedad()"
@@ -69,7 +112,7 @@
         <input ng-model="administracionCtrl.propiedad.superficie" type="text"/>
         <input ng-model="administracionCtrl.propiedad.habitaciones" type="text"/>
         <input ng-model="administracionCtrl.propiedad.banos" type="text"/>
-        <input ng-model="administracionCtrl.propiedad.servicios_basicos" type="text"/>
+        <input ng-model="administracionCtrl.propiedad.servicio" type="text"/>
         <input ng-model="administracionCtrl.propiedad.generales" type="text"/>
         <input ng-model="administracionCtrl.propiedad.otros" type="text"/>
 
